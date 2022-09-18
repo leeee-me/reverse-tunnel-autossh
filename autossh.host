@@ -1,0 +1,34 @@
+
+#!/bin/sh
+#
+# $Id: autossh.host,v 1.6 2004/01/24 05:53:09 harding Exp $
+#
+
+PATH=/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+REMOTE_USER=me
+REMOTE_HOST=jump
+HOME=/home/T/
+SSH_KEY=$HOME/.ssh/id
+#LOCAL_SSH_PORT=22
+LOCAL_SSH_PORT=1622
+JUMP_SSH_PORT=22
+TUNNEL_PORT=1998
+USER=T
+LANG=en_US.UTF-8
+
+if [ "X$SSH_AUTH_SOCK" = "X" ]; then
+    eval `ssh-agent -s`
+    ssh-add $SSH_KEY
+fi
+
+AUTOSSH_POLL=600
+AUTOSSH_PORT=21998
+AUTOSSH_GATETIME=30
+#AUTOSSH_LOGLEVEL=3
+AUTOSSH_LOGFILE=$HOME/$REMOTE_HOST.log
+#AUTOSSH_DEBUG=yes 
+#AUTOSSH_PATH=/usr/local/bin/ssh
+export AUTOSSH_POLL AUTOSSH_LOGFILE AUTOSSH_DEBUG AUTOSSH_PATH AUTOSSH_GATETIME AUTOSSH_PORT
+
+autossh -fN -M $AUTOSSH_PORT -4 -p ${JUMP_SSH_PORT} -R ${TUNNEL_PORT}:localhost:${LOCAL_SSH_PORT} ${REMOTE_USER}@${REMOTE_HOST} -vv -o BatchMode=yes -o ServerAliveCountMax=15 -o ServerAliveInterval=300 -o ExitOnForwardFailure=yes -o ConnectTimeout=10 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=false

@@ -1,0 +1,14 @@
+[Unit] 
+Description=Keep a tunnel to ninja
+After=network-online.target
+
+
+[Service]
+Type=forking
+User=T
+ExecStart=/home/T/autossh.host
+ExecStop=/usr/bin/pkill -9 -u tunnel
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

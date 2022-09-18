@@ -1,0 +1,7 @@
+#!/bin/bash
+
+export N1='ssh -p 1998 -o ForwardAgent=yes -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=false -o ConnectTimeout=10 -i ~/.ssh/id localuser@localhost'
+
+alias n1='eval $N1'
+
+return 0
