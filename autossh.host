@@ -22,13 +22,14 @@ if [ "X$SSH_AUTH_SOCK" = "X" ]; then
     ssh-add $SSH_KEY
 fi
 
-AUTOSSH_POLL=600
+AUTOSSH_POLL=180
 AUTOSSH_PORT=21998
-AUTOSSH_GATETIME=30
+AUTOSSH_GATETIME=0
 #AUTOSSH_LOGLEVEL=3
 AUTOSSH_LOGFILE=$HOME/$REMOTE_HOST.log
 #AUTOSSH_DEBUG=yes 
 #AUTOSSH_PATH=/usr/local/bin/ssh
 export AUTOSSH_POLL AUTOSSH_LOGFILE AUTOSSH_DEBUG AUTOSSH_PATH AUTOSSH_GATETIME AUTOSSH_PORT
 
-autossh -fN -M $AUTOSSH_PORT -4 -p ${JUMP_SSH_PORT} -R ${TUNNEL_PORT}:localhost:${LOCAL_SSH_PORT} ${REMOTE_USER}@${REMOTE_HOST} -vv -o BatchMode=yes -o ServerAliveCountMax=15 -o ServerAliveInterval=300 -o ExitOnForwardFailure=yes -o ConnectTimeout=10 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=false
+autossh -M $AUTOSSH_PORT -4 -p ${JUMP_SSH_PORT} -N -R ${TUNNEL_PORT}:localhost:${LOCAL_SSH_PORT} ${REMOTE_USER}@${REMOTE_HOST} -vv -o BatchMode=yes -o ServerAliveCountMax=15 -o ServerAliveInterval=300 -o ExitOnForwardFailure=yes -o ConnectTimeout=10 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o LogLevel=ERROR
+
