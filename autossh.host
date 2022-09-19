@@ -31,5 +31,5 @@ AUTOSSH_LOGFILE=$HOME/$REMOTE_HOST.log
 #AUTOSSH_PATH=/usr/local/bin/ssh
 export AUTOSSH_POLL AUTOSSH_LOGFILE AUTOSSH_DEBUG AUTOSSH_PATH AUTOSSH_GATETIME AUTOSSH_PORT
 
-autossh -M $AUTOSSH_PORT -4 -p ${JUMP_SSH_PORT} -N -R ${TUNNEL_PORT}:localhost:${LOCAL_SSH_PORT} ${REMOTE_USER}@${REMOTE_HOST} -vv -o BatchMode=yes -o ServerAliveCountMax=15 -o ServerAliveInterval=300 -o ExitOnForwardFailure=yes -o ConnectTimeout=10 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o LogLevel=ERROR
+autossh -M $AUTOSSH_PORT -f -4 -p ${JUMP_SSH_PORT} -N -R ${TUNNEL_PORT}:localhost:${LOCAL_SSH_PORT} ${REMOTE_USER}@${REMOTE_HOST} -vv -o BatchMode=yes -o ServerAliveCountMax=15 -o ServerAliveInterval=300 -o ExitOnForwardFailure=yes -o ConnectTimeout=10 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o LogLevel=ERROR
 
